@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyek1 STr HTML 27 02 2024</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/solid.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Srisakdi&display=swap" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.3/r-3.0.1/datatables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.3/r-3.0.1/datatables.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h4>AFH</h4>
+            </div>
+            <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="hobi-skills.html">Hobbies & Skills</a></li>
+                    <li><a href="galeri-more.html">Gallery & More</a></li>
+                    <li><a href="scrapping.html">Data Scrapping</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <input type="checkbox">
+                <span></span>
+                <span></span>
+                <span></span>   
+            </div>
+        </nav>
+    </header>
+    <h1>Hasil Scrapping Website Republika</h1>
+
+    <div class="table-wrapper">
+        <table id="table-result" class="display" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Judul</th>
+              <th>Kategori</th>
+              <th>Waktu Publish</th>
+              <th>Waktu Scraping</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+
+<script src="js/main.js"></script>
+<script>
+    // get data
+    fetch("/data/republika_news.json")
+      .then(req => req.json())
+      .then(data => {
+        // render table
+        $('#table-result').DataTable({
+          data,
+          columns: [
+            {data: 'judul'},
+            {data: 'kategori'},
+            {data: 'waktu_publish'},
+            {data: 'waktu_scraping'},
+          ],
+          columnDefs: [
+            {
+              target: 3,
+              render: DataTable.render.datetime()
+            }
+          ],
+          order: [3, 'asc'],
+          responsive: true,
+        });
+      });
+  </script>
+</body>
+</html>
